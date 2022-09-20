@@ -34,6 +34,8 @@ final class SymbolsConfiguration
     private SymbolRegistry $excludedFunctions;
     private SymbolRegistry $excludedConstants;
 
+    private ?NamespaceRegistry $includedNamespaces;
+
     public static function create(
         bool $exposeGlobalConstants = false,
         bool $exposeGlobalClasses = false,
@@ -47,7 +49,8 @@ final class SymbolsConfiguration
         ?SymbolRegistry $exposedConstants = null,
         ?SymbolRegistry $excludedClasses = null,
         ?SymbolRegistry $excludedFunctions = null,
-        ?SymbolRegistry $excludedConstants = null
+        ?SymbolRegistry $excludedConstants = null,
+        ?NamespaceRegistry $includedNamespaces = null
     ): self {
         return new self(
             $exposeGlobalConstants,
@@ -61,6 +64,7 @@ final class SymbolsConfiguration
             $excludedClasses ?? SymbolRegistry::create(),
             $excludedFunctions ?? SymbolRegistry::create(),
             $excludedConstants ?? SymbolRegistry::createForConstants(),
+            $includedNamespaces
         );
     }
 
@@ -75,7 +79,8 @@ final class SymbolsConfiguration
         SymbolRegistry $exposedConstants,
         SymbolRegistry $excludedClasses,
         SymbolRegistry $excludedFunctions,
-        SymbolRegistry $excludedConstants
+        SymbolRegistry $excludedConstants,
+        ?NamespaceRegistry $includedNamespaces
     ) {
         $this->exposeGlobalConstants = $exposeGlobalConstants;
         $this->exposeGlobalClasses = $exposeGlobalClasses;
@@ -88,6 +93,7 @@ final class SymbolsConfiguration
         $this->excludedClasses = $excludedClasses;
         $this->excludedFunctions = $excludedFunctions;
         $this->excludedConstants = $excludedConstants;
+        $this->includedNamespaces = $includedNamespaces;
     }
 
     public function shouldExposeGlobalConstants(): bool
@@ -108,6 +114,11 @@ final class SymbolsConfiguration
     public function getExcludedNamespaces(): NamespaceRegistry
     {
         return $this->excludedNamespaces;
+    }
+
+    public function getIncludedNamespaces(): ?NamespaceRegistry
+    {
+        return $this->includedNamespaces;
     }
 
     public function getExposedNamespaces(): NamespaceRegistry
