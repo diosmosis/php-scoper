@@ -49,6 +49,14 @@ final class SymbolsConfigurationFactory
         );
 
         [
+            $includedNamespaceNames,
+            $includedNamespaceRegexes,
+        ] = $this->retrieveElements(
+            $config,
+            ConfigurationKeys::INCLUDE_NAMESPACES_KEYWORD,
+        );
+
+        [
             $exposedNamespaceNames,
             $exposedNamespaceRegexes,
         ] = $this->retrieveElements(
@@ -159,6 +167,10 @@ final class SymbolsConfigurationFactory
             $excludedClasses,
             $excludedFunctions,
             $excludedConstants,
+            NamespaceRegistry::create(
+                $includedNamespaceNames,
+                $includedNamespaceRegexes,
+            ),
         );
     }
 
