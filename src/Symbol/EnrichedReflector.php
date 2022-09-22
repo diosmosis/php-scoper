@@ -157,6 +157,10 @@ final class EnrichedReflector
 
     private function isIncludedNamespace(string $name): bool
     {
+        if (NamespaceRegistry::extractNameNamespace($name) === '') {
+            return true;
+        }
+
         return $this
             ->symbolsConfiguration
             ->getIncludedNamespaces()
@@ -165,6 +169,10 @@ final class EnrichedReflector
 
     private function belongsToIncludedNamespace(string $name): bool
     {
+        if (NamespaceRegistry::extractNameNamespace($name) === '') {
+            return true;
+        }
+
         return $this
             ->symbolsConfiguration
             ->getIncludedNamespaces()
