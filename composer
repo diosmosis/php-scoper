@@ -1,0 +1,6 @@
+#!/bin/bash
+if [[ "$*" == *"install"* ]]; then
+  composer.phar "$@" --ignore-platform-reqs
+else
+  composer.phar "$@"
+fi
